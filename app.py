@@ -2,70 +2,47 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-# Librerías externas entregadas para el proyecto
-from librería_funciones_proyecto1 import calcular_depreciacion_linea_recta
-from librería_clases_proyecto1 import InventarioProducto
+from libreria_funciones_proyecto1 import calcular_depreciacion_linea_recta
+from libreria_clases_proyecto1 import InventarioProducto
 
-
-# =========================================================
-# CONFIGURACIÓN GENERAL
-# =========================================================
 
 st.set_page_config(
-    page_title="Proyecto 1 - Python Fundamentals",
+    page_title="Proyecto Python Fundamentals",
     page_icon="🐍",
     layout="wide"
 )
 
 
-# =========================================================
-# FUNCIONES AUXILIARES
-# =========================================================
+# ============================================================
+# CONFIGURACIÓN INICIAL
+# ============================================================
 
-def inicializar_estado():
-    """Inicializa los datos que deben conservarse durante la sesión."""
+if "movimientos" not in st.session_state:
+    st.session_state.movimientos = []
 
-    # Ejercicio 1
-    if "movimientos" not in st.session_state:
-        st.session_state.movimientos = []
+if "productos_np" not in st.session_state:
+    st.session_state.productos_np = {
+        "nombre": np.array([], dtype=str),
+        "categoria": np.array([], dtype=str),
+        "precio": np.array([], dtype=float),
+        "cantidad": np.array([], dtype=int),
+        "total": np.array([], dtype=float)
+    }
 
-    # Ejercicio 2
-    if "productos" not in st.session_state:
-        st.session_state.productos = np.array([], dtype=object)
+if "historial_depreciacion" not in st.session_state:
+    st.session_state.historial_depreciacion = []
 
-    if "categorias" not in st.session_state:
-        st.session_state.categorias = np.array([], dtype=object)
-
-    if "precios" not in st.session_state:
-        st.session_state.precios = np.array([], dtype=float)
-
-    if "cantidades" not in st.session_state:
-        st.session_state.cantidades = np.array([], dtype=int)
-
-    # Ejercicio 3
-    if "historial_depreciacion" not in st.session_state:
-        st.session_state.historial_depreciacion = []
-
-    # Ejercicio 4
-    if "inventario" not in st.session_state:
-        st.session_state.inventario = []
+if "inventario" not in st.session_state:
+    st.session_state.inventario = []
 
 
-def mostrar_moneda(valor):
-    """Da formato monetario a un valor."""
-    return f"S/ {valor:,.2f}"
-
-
-inicializar_estado()
-
-
-# =========================================================
+# ============================================================
 # MENÚ LATERAL
-# =========================================================
+# ============================================================
 
-st.sidebar.title("🐍 Proyecto Python")
+st.sidebar.title("📚 Menú")
 
-opcion = st.sidebar.selectbox(
+pagina = st.sidebar.selectbox(
     "Selecciona una sección:",
     [
         "Home",
@@ -76,112 +53,107 @@ opcion = st.sidebar.selectbox(
     ]
 )
 
-st.sidebar.markdown("---")
-st.sidebar.write("Python Fundamentals")
-st.sidebar.write("Proyecto 1")
 
-
-# =========================================================
+# ============================================================
 # HOME
-# =========================================================
+# ============================================================
 
-if opcion == "Home":
+if pagina == "Home":
 
     st.title("🐍 Proyecto Aplicado en Streamlit")
-    st.subheader("Especialización en Python for Analytics")
-    st.markdown("### Módulo 1 - Python Fundamentals")
 
-    st.info(
-        "Aplicación interactiva desarrollada para integrar los conceptos "
-        "fundamentales aprendidos durante el módulo."
+    st.subheader(
+        "Especialización en Python for Analytics - Módulo 1"
     )
 
     st.markdown("## Información del estudiante")
 
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.write("**Nombre completo:** [Coloca aquí tu nombre completo]")
-        st.write("**Curso:** Especialización Python for Analytics")
-        st.write("**Módulo:** Python Fundamentals")
-
-    with col2:
-        st.write("**Proyecto:** Proyecto 1 - Aplicación en Streamlit")
-        st.write("**Año:** 2026")
-        st.write("**Tecnología principal:** Python + Streamlit")
-
-    st.markdown("---")
+    st.write("**Nombre:** Sebastián Ccala")
+    st.write("**Módulo:** Python Fundamentals")
+    st.write("**Año:** 2026")
 
     st.markdown("## Descripción del proyecto")
 
     st.write(
-        "Esta aplicación integra estructuras de datos, widgets de Streamlit, "
-        "NumPy, Pandas, funciones y programación orientada a objetos. "
-        "Cada ejercicio presenta una solución interactiva y permite visualizar "
-        "los resultados directamente en pantalla."
+        """
+        Esta aplicación ha sido desarrollada utilizando Python y Streamlit
+        con el objetivo de aplicar los conocimientos aprendidos durante
+        el módulo Python Fundamentals.
+
+        El proyecto integra listas, arreglos de NumPy, DataFrames,
+        funciones externas y programación orientada a objetos mediante
+        operaciones CRUD.
+        """
     )
 
     st.markdown("## Tecnologías utilizadas")
 
-    col1, col2, col3, col4 = st.columns(4)
+    st.write("- Python")
+    st.write("- Streamlit")
+    st.write("- NumPy")
+    st.write("- Pandas")
+    st.write("- Programación Orientada a Objetos")
 
-    col1.metric("Lenguaje", "Python")
-    col2.metric("Interfaz", "Streamlit")
-    col3.metric("Arrays", "NumPy")
-    col4.metric("Datos", "Pandas")
 
+# ============================================================
+# EJERCICIO 1
+# ============================================================
 
-# =========================================================
-# EJERCICIO 1 - FLUJO DE CAJA CON LISTAS
-# =========================================================
+elif pagina == "Ejercicio 1":
 
-elif opcion == "Ejercicio 1":
-
-    st.title("💰 Ejercicio 1 - Flujo de Caja con Listas")
+    st.title("💰 Ejercicio 1 - Flujo de caja con listas")
 
     st.markdown(
         """
-        En este ejercicio se registran movimientos financieros utilizando
-        una lista. Cada movimiento contiene un concepto, un tipo de movimiento
-        y un valor. La aplicación calcula los ingresos, gastos y saldo final.
+        En este ejercicio se registran movimientos financieros
+        utilizando una lista de Python.
+
+        Cada movimiento contiene:
+        - Concepto
+        - Tipo de movimiento
+        - Valor
         """
     )
-
-    st.subheader("Registrar movimiento")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
+
         concepto = st.text_input(
             "Concepto",
-            placeholder="Ejemplo: Venta de productos"
+            placeholder="Ej. Venta de servicio"
         )
 
     with col2:
+
         tipo = st.selectbox(
             "Tipo de movimiento",
             ["Ingreso", "Gasto"]
         )
 
     with col3:
+
         valor = st.number_input(
-            "Valor",
+            "Valor (S/)",
             min_value=0.0,
-            step=0.01,
+            step=10.0,
             format="%.2f"
         )
 
-    if st.button("➕ Agregar movimiento", type="primary"):
+    if st.button("➕ Agregar movimiento"):
 
         if concepto.strip() == "":
-            st.warning("Ingrese un concepto.")
+
+            st.warning("Ingresa un concepto.")
 
         elif valor <= 0:
-            st.warning("El valor debe ser mayor que 0.")
+
+            st.warning("El valor debe ser mayor que cero.")
 
         else:
+
             movimiento = {
-                "concepto": concepto.strip(),
+                "concepto": concepto,
                 "tipo": tipo,
                 "valor": valor
             }
@@ -190,16 +162,13 @@ elif opcion == "Ejercicio 1":
 
             st.success("Movimiento agregado correctamente.")
 
-    st.markdown("---")
-    st.subheader("Movimientos registrados")
+    st.markdown("### Movimientos registrados")
 
-    if st.session_state.movimientos:
+    if len(st.session_state.movimientos) > 0:
 
         df_movimientos = pd.DataFrame(
             st.session_state.movimientos
         )
-
-        df_movimientos["valor"] = df_movimientos["valor"].round(2)
 
         st.dataframe(
             df_movimientos,
@@ -221,82 +190,93 @@ elif opcion == "Ejercicio 1":
 
         saldo = total_ingresos - total_gastos
 
-        st.subheader("Resumen del flujo de caja")
-
         col1, col2, col3 = st.columns(3)
 
-        with col1:
-            st.metric(
-                "Total ingresos",
-                mostrar_moneda(total_ingresos)
-            )
+        col1.metric(
+            "Total ingresos",
+            f"S/ {total_ingresos:,.2f}"
+        )
 
-        with col2:
-            st.metric(
-                "Total gastos",
-                mostrar_moneda(total_gastos)
-            )
+        col2.metric(
+            "Total gastos",
+            f"S/ {total_gastos:,.2f}"
+        )
 
-        with col3:
-            st.metric(
-                "Saldo final",
-                mostrar_moneda(saldo)
-            )
+        col3.metric(
+            "Saldo final",
+            f"S/ {saldo:,.2f}"
+        )
 
         if saldo >= 0:
-            st.success("El flujo de caja está a favor.")
+
+            st.success(
+                "El flujo de caja está a favor."
+            )
+
         else:
-            st.error("El flujo de caja está en contra.")
+
+            st.error(
+                "El flujo de caja está en contra."
+            )
 
         if st.button("🗑️ Limpiar movimientos"):
+
             st.session_state.movimientos = []
+
             st.rerun()
 
     else:
-        st.info("Todavía no hay movimientos registrados.")
+
+        st.info(
+            "Todavía no hay movimientos registrados."
+        )
 
 
-# =========================================================
-# EJERCICIO 2 - NUMPY + DATAFRAME
-# =========================================================
+# ============================================================
+# EJERCICIO 2
+# ============================================================
 
-elif opcion == "Ejercicio 2":
+elif pagina == "Ejercicio 2":
 
-    st.title("📊 Ejercicio 2 - Registro con NumPy y DataFrame")
+    st.title(
+        "📦 Ejercicio 2 - Registro con NumPy y DataFrame"
+    )
 
     st.markdown(
         """
-        En este ejercicio se registran productos utilizando arreglos de NumPy.
-        Posteriormente, los arrays se convierten en un DataFrame de Pandas
-        para mostrar la información actualizada.
+        En este ejercicio se registran productos utilizando
+        arreglos de NumPy.
+
+        Posteriormente los arreglos son convertidos en un
+        DataFrame de Pandas.
         """
     )
-
-    st.subheader("Registrar producto")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        producto = st.text_input(
-            "Nombre del producto",
-            placeholder="Ejemplo: Laptop"
+
+        nombre = st.text_input(
+            "Nombre del producto"
         )
 
         categoria = st.selectbox(
             "Categoría",
             [
-                "Tecnología",
-                "Oficina",
-                "Accesorios",
-                "Otros"
+                "Activo",
+                "Suministro",
+                "Servicio",
+                "Mercadería",
+                "Otro"
             ]
         )
 
     with col2:
+
         precio = st.number_input(
-            "Precio unitario",
+            "Precio unitario (S/)",
             min_value=0.0,
-            step=0.01,
+            step=10.0,
             format="%.2f"
         )
 
@@ -306,152 +286,144 @@ elif opcion == "Ejercicio 2":
             step=1
         )
 
-    if st.button("➕ Agregar producto", type="primary"):
+    if st.button("➕ Agregar producto"):
 
-        if producto.strip() == "":
-            st.warning("Ingrese el nombre del producto.")
+        if nombre.strip() == "":
+
+            st.warning(
+                "Ingresa el nombre del producto."
+            )
 
         elif precio <= 0:
-            st.warning("El precio debe ser mayor que 0.")
+
+            st.warning(
+                "El precio debe ser mayor que cero."
+            )
 
         else:
 
-            st.session_state.productos = np.append(
-                st.session_state.productos,
-                producto.strip()
+            total = precio * cantidad
+
+            st.session_state.productos_np["nombre"] = np.append(
+                st.session_state.productos_np["nombre"],
+                nombre
             )
 
-            st.session_state.categorias = np.append(
-                st.session_state.categorias,
+            st.session_state.productos_np["categoria"] = np.append(
+                st.session_state.productos_np["categoria"],
                 categoria
             )
 
-            st.session_state.precios = np.append(
-                st.session_state.precios,
+            st.session_state.productos_np["precio"] = np.append(
+                st.session_state.productos_np["precio"],
                 precio
             )
 
-            st.session_state.cantidades = np.append(
-                st.session_state.cantidades,
+            st.session_state.productos_np["cantidad"] = np.append(
+                st.session_state.productos_np["cantidad"],
                 cantidad
             )
 
-            st.success("Producto agregado correctamente.")
+            st.session_state.productos_np["total"] = np.append(
+                st.session_state.productos_np["total"],
+                total
+            )
 
-    st.markdown("---")
-    st.subheader("Productos registrados")
+            st.success(
+                "Producto agregado correctamente."
+            )
 
-    if len(st.session_state.productos) > 0:
+    st.markdown("### Tabla de productos")
 
-        # NumPy realiza la multiplicación elemento por elemento.
-        totales = (
-            st.session_state.precios
-            * st.session_state.cantidades
-        )
+    arrays = st.session_state.productos_np
 
-        # Conversión de los arrays a DataFrame.
-        df_productos = pd.DataFrame({
-            "Producto": st.session_state.productos,
-            "Categoría": st.session_state.categorias,
-            "Precio": st.session_state.precios,
-            "Cantidad": st.session_state.cantidades,
-            "Total": totales
-        })
+    if len(arrays["nombre"]) > 0:
+
+        df_productos = pd.DataFrame(arrays)
+
+        df_productos.columns = [
+            "Producto",
+            "Categoría",
+            "Precio",
+            "Cantidad",
+            "Total"
+        ]
 
         st.dataframe(
-            df_productos.style.format({
-                "Precio": "S/ {:,.2f}",
-                "Total": "S/ {:,.2f}"
-            }),
+            df_productos,
             use_container_width=True,
             hide_index=True
         )
 
-        total_ventas = float(totales.sum())
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.metric(
-                "Productos registrados",
-                len(df_productos)
-            )
-
-        with col2:
-            st.metric(
-                "Valor total",
-                mostrar_moneda(total_ventas)
-            )
-
-        if st.button("🗑️ Limpiar productos"):
-            st.session_state.productos = np.array([], dtype=object)
-            st.session_state.categorias = np.array([], dtype=object)
-            st.session_state.precios = np.array([], dtype=float)
-            st.session_state.cantidades = np.array([], dtype=int)
-            st.rerun()
-
     else:
-        st.info("Todavía no hay productos registrados.")
+
+        st.info(
+            "Todavía no hay productos registrados."
+        )
 
 
-# =========================================================
-# EJERCICIO 3 - FUNCIÓN DE LIBRERÍA EXTERNA
-# =========================================================
+# ============================================================
+# EJERCICIO 3
+# ============================================================
 
-elif opcion == "Ejercicio 3":
+elif pagina == "Ejercicio 3":
 
-    st.title("🧮 Ejercicio 3 - Función desde Librería Externa")
+    st.title(
+        "🧾 Ejercicio 3 - Función desde librería externa"
+    )
 
     st.markdown(
         """
-        En este ejercicio se utiliza una función de la librería externa
-        `librería_funciones_proyecto1.py`.
+        En este ejercicio utilizaremos una función de la
+        librería externa:
 
-        La función seleccionada está relacionada con contabilidad y permite
-        calcular la depreciación de un activo mediante el método de línea recta.
+        `libreria_funciones_proyecto1.py`
+
+        La función seleccionada está relacionada con el
+        área contable y permite calcular la depreciación
+        de un activo mediante el método de línea recta.
         """
     )
 
-    st.subheader("Función seleccionada")
-
-    st.selectbox(
-        "Selecciona la función:",
-        ["calcular_depreciacion_linea_recta"]
+    funcion = st.selectbox(
+        "Selecciona la función",
+        [
+            "calcular_depreciacion_linea_recta"
+        ]
     )
-
-    st.write(
-        "Fórmula: depreciación anual = "
-        "(costo del activo - valor residual) / vida útil"
-    )
-
-    st.markdown("---")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
+
         costo_activo = st.number_input(
-            "Costo del activo",
-            min_value=0.0,
-            step=100.0,
+            "Costo del activo (S/)",
+            min_value=0.01,
+            value=12000.0,
+            step=500.0,
             format="%.2f"
         )
 
     with col2:
+
         valor_residual = st.number_input(
-            "Valor residual",
+            "Valor residual (S/)",
             min_value=0.0,
+            value=1000.0,
             step=100.0,
             format="%.2f"
         )
 
     with col3:
+
         vida_util = st.number_input(
             "Vida útil (años)",
             min_value=1,
+            value=5,
             step=1
         )
 
-    if st.button("▶️ Calcular depreciación", type="primary"):
+    if st.button("▶️ Ejecutar función"):
 
         try:
 
@@ -461,310 +433,357 @@ elif opcion == "Ejercicio 3":
                 vida_util
             )
 
-            st.success("Cálculo realizado correctamente.")
+            st.success(
+                "Función ejecutada correctamente."
+            )
 
             col1, col2 = st.columns(2)
 
-            with col1:
-                st.metric(
-                    "Depreciación anual",
-                    mostrar_moneda(resultado["depreciacion_anual"])
-                )
+            col1.metric(
+                "Depreciación anual",
+                f"S/ {resultado['depreciacion_anual']:,.2f}"
+            )
 
-            with col2:
-                st.metric(
-                    "Depreciación mensual",
-                    mostrar_moneda(resultado["depreciacion_mensual"])
-                )
+            col2.metric(
+                "Depreciación mensual",
+                f"S/ {resultado['depreciacion_mensual']:,.2f}"
+            )
 
             registro = {
+
                 "Costo activo": costo_activo,
+
                 "Valor residual": valor_residual,
-                "Vida útil (años)": vida_util,
-                "Depreciación anual": resultado["depreciacion_anual"],
-                "Depreciación mensual": resultado["depreciacion_mensual"]
+
+                "Vida útil": vida_util,
+
+                "Depreciación anual":
+                    resultado["depreciacion_anual"],
+
+                "Depreciación mensual":
+                    resultado["depreciacion_mensual"]
             }
 
-            st.session_state.historial_depreciacion.append(registro)
+            st.session_state.historial_depreciacion.append(
+                registro
+            )
 
         except ValueError as error:
-            st.error(f"Error: {error}")
 
-    st.markdown("---")
-    st.subheader("Histórico de resultados")
+            st.error(
+                f"Error: {error}"
+            )
 
-    if st.session_state.historial_depreciacion:
+    st.markdown(
+        "### Histórico de resultados"
+    )
+
+    if len(st.session_state.historial_depreciacion) > 0:
 
         df_historial = pd.DataFrame(
             st.session_state.historial_depreciacion
         )
 
         st.dataframe(
-            df_historial.style.format({
-                "Costo activo": "S/ {:,.2f}",
-                "Valor residual": "S/ {:,.2f}",
-                "Depreciación anual": "S/ {:,.2f}",
-                "Depreciación mensual": "S/ {:,.2f}"
-            }),
+            df_historial,
             use_container_width=True,
             hide_index=True
         )
 
-        if st.button("🗑️ Limpiar histórico"):
-            st.session_state.historial_depreciacion = []
-            st.rerun()
-
     else:
-        st.info("Todavía no existen resultados históricos.")
+
+        st.info(
+            "Todavía no se ha ejecutado la función."
+        )
 
 
-# =========================================================
-# EJERCICIO 4 - CLASE EXTERNA + CRUD
-# =========================================================
+# ============================================================
+# EJERCICIO 4
+# ============================================================
 
-elif opcion == "Ejercicio 4":
+elif pagina == "Ejercicio 4":
 
-    st.title("📦 Ejercicio 4 - Inventario con Clase y CRUD")
+    st.title(
+        "🏷️ Ejercicio 4 - Clase externa y CRUD"
+    )
 
     st.markdown(
         """
-        En este ejercicio se utiliza la clase `InventarioProducto` de la
-        librería externa `librería_clases_proyecto1.py`.
+        En este ejercicio se utiliza la clase:
+
+        `InventarioProducto`
+
+        perteneciente a la librería externa
+        `libreria_clases_proyecto1.py`.
 
         Se implementan las operaciones CRUD:
-        **Crear, Leer, Actualizar y Eliminar**.
+
+        - Crear
+        - Leer
+        - Actualizar
+        - Eliminar
         """
     )
 
-    # -----------------------------------------------------
+    accion = st.radio(
+        "Selecciona una operación:",
+        [
+            "Crear",
+            "Leer",
+            "Actualizar",
+            "Eliminar"
+        ],
+        horizontal=True
+    )
+
+
+    # ========================================================
     # CREAR
-    # -----------------------------------------------------
+    # ========================================================
 
-    st.subheader("➕ Crear producto")
+    if accion == "Crear":
 
-    col1, col2 = st.columns(2)
-
-    with col1:
-        nombre_producto = st.text_input(
-            "Nombre del producto",
-            key="crear_nombre"
+        st.subheader(
+            "Crear producto"
         )
-
-        costo_unitario = st.number_input(
-            "Costo unitario",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",
-            key="crear_costo"
-        )
-
-        precio_unitario = st.number_input(
-            "Precio unitario",
-            min_value=0.0,
-            step=0.01,
-            format="%.2f",
-            key="crear_precio"
-        )
-
-    with col2:
-        stock_actual = st.number_input(
-            "Stock actual",
-            min_value=0,
-            step=1,
-            key="crear_stock"
-        )
-
-        stock_minimo = st.number_input(
-            "Stock mínimo",
-            min_value=0,
-            step=1,
-            key="crear_stock_minimo"
-        )
-
-    if st.button("Crear producto", type="primary"):
-
-        if nombre_producto.strip() == "":
-            st.warning("Ingrese el nombre del producto.")
-
-        elif costo_unitario <= 0 or precio_unitario <= 0:
-            st.warning("Costo y precio deben ser mayores que 0.")
-
-        else:
-
-            try:
-
-                producto_objeto = InventarioProducto(
-                    nombre_producto.strip(),
-                    costo_unitario,
-                    precio_unitario,
-                    stock_actual,
-                    stock_minimo
-                )
-
-                st.session_state.inventario.append(producto_objeto)
-
-                st.success("Producto creado correctamente.")
-
-            except ValueError as error:
-                st.error(f"Error: {error}")
-
-    st.markdown("---")
-
-    # -----------------------------------------------------
-    # LEER
-    # -----------------------------------------------------
-
-    st.subheader("👁️ Leer / visualizar inventario")
-
-    if st.session_state.inventario:
-
-        datos_inventario = []
-
-        for producto in st.session_state.inventario:
-            datos_inventario.append(producto.resumen())
-
-        df_inventario = pd.DataFrame(datos_inventario)
-
-        st.dataframe(
-            df_inventario.style.format({
-                "valor_inventario": "S/ {:,.2f}",
-                "margen_unitario": "S/ {:,.2f}",
-                "margen_pct": "{:.2f}%"
-            }),
-            use_container_width=True,
-            hide_index=True
-        )
-
-    else:
-        st.info("No existen productos en el inventario.")
-
-    st.markdown("---")
-
-    # -----------------------------------------------------
-    # ACTUALIZAR
-    # -----------------------------------------------------
-
-    st.subheader("✏️ Actualizar producto")
-
-    if st.session_state.inventario:
-
-        nombres = [
-            producto.nombre
-            for producto in st.session_state.inventario
-        ]
-
-        producto_seleccionado = st.selectbox(
-            "Selecciona el producto a actualizar:",
-            nombres,
-            key="actualizar_producto"
-        )
-
-        indice = nombres.index(producto_seleccionado)
-        producto_actual = st.session_state.inventario[indice]
 
         col1, col2 = st.columns(2)
 
         with col1:
-            nuevo_nombre = st.text_input(
-                "Nuevo nombre",
-                value=producto_actual.nombre,
-                key="nuevo_nombre"
+
+            nombre = st.text_input(
+                "Nombre del producto",
+                key="crear_nombre"
             )
 
-            nuevo_costo = st.number_input(
-                "Nuevo costo unitario",
+            costo = st.number_input(
+                "Costo unitario (S/)",
                 min_value=0.01,
-                value=float(producto_actual.costo_unitario),
-                step=0.01,
-                key="nuevo_costo"
+                step=10.0,
+                format="%.2f",
+                key="crear_costo"
             )
 
-            nuevo_precio = st.number_input(
-                "Nuevo precio unitario",
+            precio = st.number_input(
+                "Precio unitario (S/)",
                 min_value=0.01,
-                value=float(producto_actual.precio_unitario),
-                step=0.01,
-                key="nuevo_precio"
+                step=10.0,
+                format="%.2f",
+                key="crear_precio"
             )
 
         with col2:
-            nuevo_stock = st.number_input(
-                "Nuevo stock actual",
+
+            stock = st.number_input(
+                "Stock actual",
                 min_value=0,
-                value=int(producto_actual.stock_actual),
                 step=1,
-                key="nuevo_stock"
+                key="crear_stock"
             )
 
-            nuevo_stock_minimo = st.number_input(
-                "Nuevo stock mínimo",
+            stock_minimo = st.number_input(
+                "Stock mínimo",
                 min_value=0,
-                value=int(producto_actual.stock_minimo),
                 step=1,
-                key="nuevo_stock_minimo"
+                key="crear_minimo"
             )
 
-        if st.button("Actualizar producto"):
+        if st.button("➕ Crear producto"):
 
-            if nuevo_nombre.strip() == "":
-                st.warning("El nombre no puede estar vacío.")
+            try:
 
-            else:
+                producto = InventarioProducto(
+                    nombre,
+                    costo,
+                    precio,
+                    stock,
+                    stock_minimo
+                )
 
-                try:
+                st.session_state.inventario.append(
+                    producto
+                )
 
-                    producto_actualizado = InventarioProducto(
-                        nuevo_nombre.strip(),
-                        nuevo_costo,
-                        nuevo_precio,
-                        nuevo_stock,
-                        nuevo_stock_minimo
-                    )
+                st.success(
+                    "Producto creado correctamente."
+                )
 
-                    st.session_state.inventario[indice] = (
-                        producto_actualizado
-                    )
+            except ValueError as error:
 
-                    st.success("Producto actualizado correctamente.")
-                    st.rerun()
+                st.error(
+                    f"Error: {error}"
+                )
 
-                except ValueError as error:
-                    st.error(f"Error: {error}")
 
-    else:
-        st.info("No hay productos disponibles para actualizar.")
+    # ========================================================
+    # LEER
+    # ========================================================
 
-    st.markdown("---")
+    elif accion == "Leer":
 
-    # -----------------------------------------------------
-    # ELIMINAR
-    # -----------------------------------------------------
-
-    st.subheader("🗑️ Eliminar producto")
-
-    if st.session_state.inventario:
-
-        nombres_eliminar = [
-            producto.nombre
-            for producto in st.session_state.inventario
-        ]
-
-        producto_eliminar = st.selectbox(
-            "Selecciona el producto a eliminar:",
-            nombres_eliminar,
-            key="eliminar_producto"
+        st.subheader(
+            "Productos registrados"
         )
 
-        if st.button("Eliminar producto"):
+        if len(st.session_state.inventario) > 0:
 
-            indice_eliminar = nombres_eliminar.index(
-                producto_eliminar
+            registros = []
+
+            for producto in st.session_state.inventario:
+
+                registros.append(
+                    producto.resumen()
+                )
+
+            df_inventario = pd.DataFrame(
+                registros
             )
 
-            st.session_state.inventario.pop(indice_eliminar)
+            st.dataframe(
+                df_inventario,
+                use_container_width=True,
+                hide_index=True
+            )
 
-            st.success("Producto eliminado correctamente.")
-            st.rerun()
+        else:
 
-    else:
-        st.info("No hay productos disponibles para eliminar.")
+            st.info(
+                "No hay productos registrados."
+            )
+
+
+    # ========================================================
+    # ACTUALIZAR
+    # ========================================================
+
+    elif accion == "Actualizar":
+
+        st.subheader(
+            "Actualizar producto"
+        )
+
+        if len(st.session_state.inventario) == 0:
+
+            st.info(
+                "No hay productos para actualizar."
+            )
+
+        else:
+
+            nombres = [
+                producto.nombre
+                for producto in st.session_state.inventario
+            ]
+
+            seleccionado = st.selectbox(
+                "Selecciona el producto",
+                nombres
+            )
+
+            indice = nombres.index(
+                seleccionado
+            )
+
+            producto = st.session_state.inventario[
+                indice
+            ]
+
+            nuevo_nombre = st.text_input(
+                "Nombre",
+                value=producto.nombre
+            )
+
+            nuevo_costo = st.number_input(
+                "Costo unitario",
+                min_value=0.01,
+                value=float(
+                    producto.costo_unitario
+                )
+            )
+
+            nuevo_precio = st.number_input(
+                "Precio unitario",
+                min_value=0.01,
+                value=float(
+                    producto.precio_unitario
+                )
+            )
+
+            nuevo_stock = st.number_input(
+                "Stock actual",
+                min_value=0,
+                value=int(
+                    producto.stock_actual
+                )
+            )
+
+            nuevo_minimo = st.number_input(
+                "Stock mínimo",
+                min_value=0,
+                value=int(
+                    producto.stock_minimo
+                )
+            )
+
+            if st.button(
+                "✏️ Guardar cambios"
+            ):
+
+                producto.nombre = nuevo_nombre
+
+                producto.costo_unitario = nuevo_costo
+
+                producto.precio_unitario = nuevo_precio
+
+                producto.stock_actual = nuevo_stock
+
+                producto.stock_minimo = nuevo_minimo
+
+                st.success(
+                    "Producto actualizado correctamente."
+                )
+
+
+    # ========================================================
+    # ELIMINAR
+    # ========================================================
+
+    elif accion == "Eliminar":
+
+        st.subheader(
+            "Eliminar producto"
+        )
+
+        if len(st.session_state.inventario) == 0:
+
+            st.info(
+                "No hay productos para eliminar."
+            )
+
+        else:
+
+            nombres = [
+                producto.nombre
+                for producto in st.session_state.inventario
+            ]
+
+            seleccionado = st.selectbox(
+                "Selecciona el producto",
+                nombres
+            )
+
+            if st.button(
+                "🗑️ Eliminar producto"
+            ):
+
+                indice = nombres.index(
+                    seleccionado
+                )
+
+                st.session_state.inventario.pop(
+                    indice
+                )
+
+                st.success(
+                    "Producto eliminado correctamente."
+                )
