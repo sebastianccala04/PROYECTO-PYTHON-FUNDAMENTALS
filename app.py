@@ -16,3 +16,23 @@ opcion = st.sidebar.selectbox(
     "Ejercicio 2",
     "Ejercicio 3",
     "Ejercicio 4"])
+
+if opcion == "Home":
+
+    st.title("Proyecto Python Fundamentals")
+
+    st.subheader("Especialización en Python for Analytics")
+
+    st.write("Proyecto práctico del Módulo 1 - Python Fundamentals")
+
+    st.write("En este proyecto se aplican conceptos fundamentales de Python, "
+             "estructuras de datos, NumPy, Pandas, funciones, clases y Streamlit.")
+
+    st.markdown("""
+    ### Tecnologías utilizadas
+
+    - Python
+    - Streamlit
+    - NumPy
+    - Pandas
+    """)
