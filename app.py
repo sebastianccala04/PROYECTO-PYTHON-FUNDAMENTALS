@@ -8,9 +8,7 @@ from libreria_clases_proyecto1 import InventarioProducto
 
 st.set_page_config(
     page_title="Proyecto Python Fundamentals",
-    page_icon="🐍",
-    layout="wide"
-)
+    layout="wide")
 
 
 # ============================================================
