@@ -36,3 +36,16 @@ if opcion == "Home":
     - NumPy
     - Pandas
     """)
+
+if opcion == "Ejercicio 1":
+
+    st.title("Ejercicio 1 - Flujo de Caja")
+
+    st.write(
+        "Registra los movimientos de caja indicando el concepto, "
+        "tipo de movimiento y valor."
+    )
+
+    # Crear la lista de movimientos
+    if "movimientos" not in st.session_state:
+        st.session_state.movimientos = []
