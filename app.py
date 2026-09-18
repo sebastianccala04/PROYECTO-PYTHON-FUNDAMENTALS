@@ -61,7 +61,7 @@ st.sidebar.caption("Proyecto aplicado – Python Fundamentals")
 # ============================================================
 
 if pagina == "Home":
-    st.title("🐍 Proyecto Aplicado en Streamlit")
+    st.title("PRIMER PROYECTO PYTHON")
     st.subheader("Especialización en Python for Analytics – Módulo 1")
 
     st.markdown("## Información del estudiante")
