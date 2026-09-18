@@ -787,3 +787,47 @@ elif pagina == "Ejercicio 4":
                 st.success(
                     "Producto eliminado correctamente."
                 )
+                def calcular_depreciacion_linea_recta(
+    costo_activo: float,
+    valor_residual: float,
+    vida_util_anios: int
+) -> dict:
+
+    validar_positivo(
+        costo_activo,
+        "costo_activo"
+    )
+
+    validar_positivo(
+        valor_residual,
+        "valor_residual",
+        permitir_cero=True
+    )
+
+    validar_positivo(
+        vida_util_anios,
+        "vida_util_anios"
+    )
+
+    if valor_residual >= costo_activo:
+
+        raise ValueError(
+            "valor_residual debe ser menor que costo_activo."
+        )
+
+    depreciacion_anual = (
+        costo_activo - valor_residual
+    ) / vida_util_anios
+
+    depreciacion_mensual = (
+        depreciacion_anual / 12
+    )
+
+    return {
+
+        "depreciacion_anual":
+            round(depreciacion_anual, 2),
+
+        "depreciacion_mensual":
+            round(depreciacion_mensual, 2)
+    }
