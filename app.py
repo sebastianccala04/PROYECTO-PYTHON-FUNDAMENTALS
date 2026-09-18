@@ -25,7 +25,7 @@ if opcion == "Home":
 
     st.write("Proyecto práctico del Módulo 1 - Python Fundamentals")
 
-    st.write("En este proyecto se aplican conceptos fundamentales de Python, "
+    st.write("En este proyecto se aplican conceptos fundamentales de Python",
              "estructuras de datos, NumPy, Pandas, funciones, clases y Streamlit.")
 
     st.markdown("""
@@ -41,11 +41,22 @@ if opcion == "Ejercicio 1":
 
     st.title("Ejercicio 1 - Flujo de Caja")
 
-    st.write(
-        "Registra los movimientos de caja indicando el concepto, "
-        "tipo de movimiento y valor."
-    )
+    st.write("Registra los movimientos de caja indicando el concepto" ,
+    "tipo de movimiento y valor.")
 
     # Crear la lista de movimientos
     if "movimientos" not in st.session_state:
         st.session_state.movimientos = []
+
+    st.subheader("Registrar movimiento")
+
+    concepto = st.text_input(
+        "Concepto",
+        placeholder="Ejemplo: Venta de productos")
+
+    tipo = st.selectbox("Tipo de movimiento",
+        ["Ingreso", "Gasto"])
+
+    valor = st.number_input("Valor",
+        min_value=0.0,
+        step=0.01)
