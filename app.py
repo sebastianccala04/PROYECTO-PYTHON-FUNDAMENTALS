@@ -60,19 +60,16 @@ st.sidebar.caption("Proyecto aplicado – Python Fundamentals")
 
 if pagina == "Home":
     st.title("🐍 Proyecto Aplicado en Streamlit")
+
+    imagen = Image.open("imagenes/portada.png")
+    st.image(imagen, use_container_width=True)
+
     st.subheader("Especialización en Python for Analytics – Módulo 1")
 
     st.markdown("## Información del estudiante")
     st.write("**Nombre:** Sebastián Ccala")
     st.write("**Módulo:** Python Fundamentals")
     st.write("**Año:** 2026")
-
-    st.markdown("## Descripción del proyecto")
-    st.write(
-        "Aplicación interactiva desarrollada en Streamlit para demostrar "
-        "el uso de listas, arreglos de NumPy, DataFrames, funciones externas "
-        "y programación orientada a objetos mediante operaciones CRUD."
-    )
 
     st.markdown("## Tecnologías utilizadas")
     st.write("- Python")
