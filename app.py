@@ -57,12 +57,10 @@ if pagina == "Home":
     st.title("PRIMER PROYECTO PYTHON - MÓDULO 1")
     
     st.write("**Creado por:** Sebastián Ccala")
-
-st.image("LOGO 2.png")
-
-
     
     st.write("**Año:** 2026")
+
+    st.image("LOGO 2.png")
 
     st.markdown("## Descripción del proyecto")
     st.write(
