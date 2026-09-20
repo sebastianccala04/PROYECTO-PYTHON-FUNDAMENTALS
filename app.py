@@ -2,6 +2,10 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
+st.image("LOGO.png")
+
+
+
 from libreria_funciones_proyecto1 import calcular_depreciacion_linea_recta
 from libreria_clases_proyecto1 import InventarioProducto
 
