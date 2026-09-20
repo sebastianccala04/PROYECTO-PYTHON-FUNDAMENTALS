@@ -261,9 +261,6 @@ elif pagina == "Ejercicio 3":
 
     st.markdown(
         """
-        Se utiliza la función **calcular_depreciacion_linea_recta()**
-        de la librería externa `libreria_funciones_proyecto1.py`.
-
         La función está relacionada con el área contable porque permite
         calcular la depreciación anual y mensual de un activo.
         """
