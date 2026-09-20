@@ -33,9 +33,9 @@ if "inventario" not in st.session_state:
 # MENÚ LATERAL
 # ============================================================
 
-st.sidebar.image("LOGO 3.gif",width =200)
+st.sidebar.image("LOGO.png")
 
-st.sidebar.title("📚 Menú")
+st.sidebar.title("## 📚 Menú")
 pagina = st.sidebar.selectbox(
     "Selecciona una sección:",
     [
