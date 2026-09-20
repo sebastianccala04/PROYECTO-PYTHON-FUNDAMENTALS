@@ -35,7 +35,7 @@ if "inventario" not in st.session_state:
 
 st.sidebar.image("LOGO.png")
 
-st.sidebar.title("## 📚 Menú")
+st.sidebar.title("##📚Menú")
 pagina = st.sidebar.selectbox(
     "Selecciona una sección:",
     [
