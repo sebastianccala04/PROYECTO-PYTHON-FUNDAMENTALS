@@ -60,12 +60,12 @@ if pagina == "Home":
     
     st.write("**Año:** 2026")
 
-    st.image("LOGO 2.png")
-
     st.markdown("## Descripción del proyecto")
     st.write(
         "Aplicación interactiva desarrollada en Streamlit para demostrar "
         "el uso de listas, arreglos de NumPy y DataFrames")
+    
+    st.image("LOGO 2.png, width =200")
 
     st.markdown("## Tecnologías utilizadas")
     st.write("- Python")
