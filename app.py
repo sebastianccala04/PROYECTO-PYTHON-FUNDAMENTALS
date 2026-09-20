@@ -5,15 +5,9 @@ import pandas as pd
 from libreria_funciones_proyecto1 import calcular_depreciacion_linea_recta
 from libreria_clases_proyecto1 import InventarioProducto
 
-
 st.set_page_config(
     page_title="Proyecto Python Fundamentals",
     layout="wide")
-
-
-# ============================================================
-# CONFIGURACIÓN INICIAL
-# ============================================================
 
 if "movimientos" not in st.session_state:
     st.session_state.movimientos = []
