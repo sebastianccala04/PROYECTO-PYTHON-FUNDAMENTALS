@@ -9,8 +9,6 @@ st.set_page_config(
     page_title="Proyecto Python Fundamentals",
     layout="wide")
 
-st.image("LOGO 2.png")
-
 
 if "movimientos" not in st.session_state:
     st.session_state.movimientos = []
@@ -59,6 +57,11 @@ if pagina == "Home":
     st.title("PRIMER PROYECTO PYTHON - MÓDULO 1")
     
     st.write("**Creado por:** Sebastián Ccala")
+
+st.image("LOGO 2.png")
+
+
+    
     st.write("**Año:** 2026")
 
     st.markdown("## Descripción del proyecto")
