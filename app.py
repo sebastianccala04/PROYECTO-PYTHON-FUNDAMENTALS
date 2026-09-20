@@ -363,9 +363,6 @@ elif pagina == "Ejercicio 4":
 
     st.markdown(
         """
-        Se utiliza la clase **InventarioProducto** de la librería externa
-        `libreria_clases_proyecto1.py`.
-
         Se implementan las operaciones CRUD:
         **Crear, Leer, Actualizar y Eliminar**.
         """
