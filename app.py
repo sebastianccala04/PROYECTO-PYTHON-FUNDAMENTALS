@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-st.image("LOGO.png")
+st.image("LOGO 2.png")
 
 
 
