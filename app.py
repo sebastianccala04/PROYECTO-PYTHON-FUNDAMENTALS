@@ -59,13 +59,13 @@ if pagina == "Home":
     st.write("**Creado por:** Sebastián Ccala")
     
     st.write("**Año:** 2026")
-
+    
+    st.image("LOGO 2.png",width =400)
+    
     st.markdown("## Descripción del proyecto")
     st.write(
         "Aplicación interactiva desarrollada en Streamlit para demostrar "
         "el uso de listas, arreglos de NumPy y DataFrames")
-    
-    st.image("LOGO 2.png",width =200)
 
     st.markdown("## Tecnologías utilizadas")
     st.write("- Python")
