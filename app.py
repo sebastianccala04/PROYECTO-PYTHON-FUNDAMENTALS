@@ -70,11 +70,9 @@ if pagina == "Home":
         "el uso de listas, arreglos de NumPy y DataFrames")
 
     st.markdown("## Tecnologías utilizadas")
-    st.write("- Python")
     st.write("- Streamlit")
     st.write("- NumPy")
     st.write("- Pandas")
-    st.write("- Programación orientada a objetos (POO)")
 
     st.info(
         "La aplicación está organizada en cuatro ejercicios y cada sección "
