@@ -60,7 +60,7 @@ if pagina == "Home":
     
     st.write("**Año:** 2026")
     
-    st.image("LOGO 2.png",width =400)
+    st.image("LOGO 2.png",width =600)
     
     st.markdown("## Descripción del proyecto")
     st.write(
